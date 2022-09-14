@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    RED.nodes.registerType('apple-findme-account', {
+        category: 'config',
+        defaults: {
+            name: { value: '' },
+            username: { value: '', required: true },
+            password: { value: '', required: true },
+
+            apiThrottleLimit: { value: 60, validate: (v) => {
+                return !(v < 60 || v > 3600)
+            }},
+            requestTimeout: { value: 5 },
+
+            timeZone: { value: 'Europe/Berlin', required: true }
+        },
+        label() {
+            return this.name || this.username;
+        },
+        oneditprepare() {
+            const $nodeConfigTimezone = $('#node-config-input-timeZone');
+
+            $.getJSON('/apple-findme-reloaded/tz', data => {
+                data.forEach(tz => {
+                    $nodeConfigTimezone.append(`<option${tz == this.timeZone ? ' selected' : ''}>${tz}</option>`);
+                });
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="apple-findme-account">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Apple Account">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-username"><i class="icon-tag"></i> Apple ID</label>
+        <input type="text" id="node-config-input-username" placeholder="Email Address">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="icon-tag"></i> Password</label>
+        <input type="password" id="node-config-input-password">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-apiThrottleLimit"><i class="icon-tag"></i> API Throttle (s)</label>
+        <input type="text" id="node-config-input-apiThrottleLimit">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-requestTimeout"><i class="icon-tag"></i> Timeout</label>
+        <input type="text" id="node-config-input-requestTimeout">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-timeZone"><i class="icon-tag"></i>  Timezone</label>
+        <select id="node-config-input-timeZone"></select>
+    </div>
+</script>

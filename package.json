@@ -1,0 +1,20 @@
+{
+  "name": "node-red-contrib-apple-findme-reloaded",
+  "version": "0.1.0",
+  "description": "Nothing yet.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tobias Schulz",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "apple-findme-account": "nodes/apple-findme-account.js",
+      "apple-findme-request": "nodes/apple-findme-request.js"
+    }
+  },
+  "dependencies": {
+    "moment": "^2.29.4",
+    "urllib": "^3.1.3"
+  }
+}
