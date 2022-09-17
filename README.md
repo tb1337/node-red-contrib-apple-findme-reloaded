@@ -12,6 +12,10 @@ Add the FindMe-Reloaded request node to your flow, insert Apple account data and
 
 And yes: the node is violet, because its our beloved new iPhone color. I love it.
 
+## Caching
+
+Minimum request time is 100 seconds to prevent you from getting banned. Your flow may request more often than that. In this case, you'll receive a cached payload. You can edit the throttling rate and set it much higher, for example when debugging your flow.
+
 ## Example payload
 
 ```javascript
