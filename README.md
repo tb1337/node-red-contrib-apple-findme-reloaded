@@ -4,6 +4,10 @@ This is an alternate, much simpler, Apple FindMe node without bloat and API requ
 
 Apple currently provides no altitude information. FindMe-Reloaded won't ever try to _fix_ that.
 
+## How to use
+
+Simply move the FindMe-Reloaded request node to your flow, insert your Apple account data, add a trigger to create a msg (data requests are triggered on input) and deploy your flow.
+
 ## Example payload
 
 ```javascript
