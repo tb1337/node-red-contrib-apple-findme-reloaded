@@ -147,9 +147,7 @@ module.exports = function (RED) {
             // is not always set
             if (item.location && typeof (item.location) == "object") {
                 r.hasLocation = true;
-
-                RED.log.info(moment);
-
+                
                 r.location = {
                     latitude: item.location.latitude,
                     longitude: item.location.longitude,
@@ -159,7 +157,7 @@ module.exports = function (RED) {
                     positionType: item.location.positionType,
                     isOld: item.location.isOld,
                     isInaccurate: item.location.isInaccurate,
-                    lastUpdated: moment(item.location.timeStamp).tz(this.account.timeZone),
+                    lastUpdated: moment.utc(item.location.timeStamp).local(),
                 };
             }
 

@@ -29,8 +29,6 @@ module.exports = function (RED) {
             this.apiThrottleLimit = Number.parseInt(config.apiThrottleLimit, 10);
             this.requestTimeout = Number.parseInt(config.requestTimeout, 10);
 
-            this.timeZone = config.timeZone;
-
             this.lastRequestDevices = { err: null, data: null, res: null, cached: false, time: moment('19000101', 'YYYYMMDD') };
 
             this.requestHeader = {
@@ -85,7 +83,7 @@ module.exports = function (RED) {
                             data: data,
                             res: res,
                             cached: false,
-                            time: moment().tz(node.timeZone)
+                            time: moment(Date.now()),
                         };
                     else
                         node.lastRequestDevices = {
@@ -93,7 +91,7 @@ module.exports = function (RED) {
                             data: node.lastRequestDevices.data || data,
                             res: res,
                             cached: true,
-                            time: moment().tz(node.timeZone)
+                            time: moment(Date.now()),
                         };
                     
                     rtn(node.lastRequestDevices);
@@ -103,12 +101,6 @@ module.exports = function (RED) {
             return await req;
         }
     }
-
-    // create endpoint for requesting timezones from the node-red frontend
-    RED.httpAdmin.get('/apple-findme-reloaded/tz', (req, res) => {
-        let zones = moment.tz.names();
-        res.status(200).send(JSON.stringify(zones));
-    });
 
     // register node
     RED.nodes.registerType('apple-findme-account', AppleFindMeAccountNode);
