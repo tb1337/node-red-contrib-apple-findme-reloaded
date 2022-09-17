@@ -2,6 +2,8 @@
 
 This is an alternate, much simpler, Apple FindMe node without bloat and API requests to third-party endpoints. FindMe-Reloaded only requests the _official_ Apple API endpoints and does **NOT** request OpenStreetMap or other services, to prevent them track you. In addition, little transformation of data is done, to keep data clean and simple.
 
+Apple currently provides no altitude information. FindMe-Reloaded won't ever try to _fix_ that.
+
 ## Example payload
 
 ```javascript
