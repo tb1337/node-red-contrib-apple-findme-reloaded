@@ -10,6 +10,8 @@ Add the FindMe-Reloaded request node to your flow, insert Apple account data and
 
 ![example low](images/example.png)
 
+And yes: the node is violet, because its our beloved new iPhone color. I love it.
+
 ## Example payload
 
 ```javascript
