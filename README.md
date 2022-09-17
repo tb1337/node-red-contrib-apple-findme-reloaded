@@ -6,7 +6,9 @@ Apple currently provides no altitude information. FindMe-Reloaded won't ever try
 
 ## How to use
 
-Simply move the FindMe-Reloaded request node to your flow, insert your Apple account data, add a trigger to create a msg (data requests are triggered on input) and deploy your flow.
+Add the FindMe-Reloaded request node to your flow, insert Apple account data and add an input (for triggering). After getting some output, do with it what you want.
+
+![example low](images/example.png)
 
 ## Example payload
 
