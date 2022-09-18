@@ -29,10 +29,9 @@ module.exports = function (RED) {
                 let res = msg._debug;
                 delete msg._debug;
                 if (!res)
-                    res = this.account.requestDevices();
-                    // res = await this.account.requestDevices();
+                    res = await this.account.requestDevices();
 
-                // msg[this.destKey == '' ? 'payload' : this.destKey] = this._handleResponse(res);
+                msg[this.destKey == '' ? 'payload' : this.destKey] = this._handleResponse(res);
                 
                 node.send(msg);
             });
