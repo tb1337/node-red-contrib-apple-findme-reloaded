@@ -1,6 +1,7 @@
 const path = require('path');
 const moment = require('moment');
-const urllib = require('urllib');
+// const urllib = require('urllib');
+const axios = require('axios').default;
 
 const pkg = require(path.join(__dirname, '..', 'package.json'));
 
@@ -53,7 +54,7 @@ module.exports = function (RED) {
          * @async
          * @returns {object} 
          */
-        async requestDevices() {
+        /*async*/ requestDevices() {
             // check if throttled
             if (moment().diff(this.lastRequestDevices.time) < this.apiThrottleLimit * 1000) {
                 let req = this.lastRequestDevices;
@@ -66,39 +67,57 @@ module.exports = function (RED) {
             this._setAuthHeader();
             var node = this;
 
-            let req = new Promise(rtn => {
-                urllib.request(ApiEndpointUrl + this.username + '/initClient', {
-                    method: 'POST',
-                    dataType: 'json',
-                    headers: this.requestHeader,
-                    content: '',
-                    rejectUnauthorized: false,
-                    timeout: 5000,
-                }, function (err, data, res) {
-                    err ||= res.statusCode != 200;
-
-                    if (!err)
-                        node.lastRequestDevices = {
-                            err: err,
-                            data: data,
-                            res: res,
-                            cached: false,
-                            time: moment(Date.now()),
-                        };
-                    else
-                        node.lastRequestDevices = {
-                            err: err,
-                            data: node.lastRequestDevices.data || data,
-                            res: res,
-                            cached: true,
-                            time: moment(Date.now()),
-                        };
-                    
-                    rtn(node.lastRequestDevices);
-                });
+            const req = axios.create({
+                baseURL: ApiEndpointUrl + this.username + '/initClient',
+                method: 'post',
+                timeout: this.requestTimeout * 1000,
+                headers: this.requestHeader,
             });
 
-            return await req;
+            try {
+                req.post().then(res => {
+                    node.send(res);
+                });
+            }
+            catch (e) {
+                node.warn(e);
+            }
+
+            return 0;
+            
+            // let req = new Promise(rtn => {
+            //     urllib.request(ApiEndpointUrl + this.username + '/initClient', {
+            //         method: 'POST',
+            //         dataType: 'json',
+            //         headers: this.requestHeader,
+            //         content: '',
+            //         rejectUnauthorized: false,
+            //         timeout: 5000,
+            //     }, function (err, data, res) {
+            //         err ||= res.statusCode != 200;
+
+            //         if (!err)
+            //             node.lastRequestDevices = {
+            //                 err: err,
+            //                 data: data,
+            //                 res: res,
+            //                 cached: false,
+            //                 time: moment(Date.now()),
+            //             };
+            //         else
+            //             node.lastRequestDevices = {
+            //                 err: err,
+            //                 data: node.lastRequestDevices.data || data,
+            //                 res: res,
+            //                 cached: true,
+            //                 time: moment(Date.now()),
+            //             };
+                    
+            //         rtn(node.lastRequestDevices);
+            //     });
+            // });
+
+            // return await req;
         }
     }
 

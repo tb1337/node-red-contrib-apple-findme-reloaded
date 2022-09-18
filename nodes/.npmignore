@@ -1,0 +1,8 @@
+node_modules
+.idea
+.editorconfig
+test
+tools
+.nyc_output
+.travis.yml
+.github
