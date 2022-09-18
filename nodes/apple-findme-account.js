@@ -1,7 +1,6 @@
 const path = require('path');
 const moment = require('moment');
-// const urllib = require('urllib');
-const axios = require('axios').default;
+const urllib = require('urllib');
 
 const pkg = require(path.join(__dirname, '..', 'package.json'));
 
