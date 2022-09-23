@@ -119,6 +119,7 @@ module.exports = function (RED) {
          */
         _generateDataModel(item, context) {
             let image_link = `${context.imageBaseUrl}/fmipmobile/deviceImages-9.0/${item.deviceClass}/${item.rawDeviceModel}-${item.deviceColor}`;
+            let hasBattery = item.batteryStatus != "Unknown";
 
             let r = {
                 id: item.id,
@@ -129,11 +130,12 @@ module.exports = function (RED) {
                 rawName: item.rawDeviceModel,
                 uuid: item.baUUID,
                 discoveryId: item.deviceDiscoveryId,
+                hasBattery: hasBattery,
                 battery: {
-                    level: item.batteryLevel,
+                    level: hasBattery ? item.batteryLevel : -1,
                     status: item.batteryStatus,
-                    isCharging: item.batteryStatus != "NotCharging",
-                    isDraining: item.batteryStatus == "NotCharging",
+                    isCharging: hasBattery ? item.batteryStatus != "NotCharging" : false,
+                    isDraining: hasBattery ? item.batteryStatus == "NotCharging" : false,
                 },
                 resources: {
                     smallImage: `${image_link}/online-infobox.png`,
