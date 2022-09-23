@@ -23,8 +23,8 @@ module.exports = function (RED) {
             var node = this;
 
             this.name = config.name;
-            this.username = config.username;
-            this.password = config.password;
+
+            node.send(this.credentials);
 
             this.apiThrottleLimit = Number.parseInt(config.apiThrottleLimit, 10);
             this.requestTimeout = Number.parseInt(config.requestTimeout, 10);
@@ -45,7 +45,8 @@ module.exports = function (RED) {
          * @private
          */
         _setAuthHeader() {
-            this.requestHeader['Authorization'] = `Basic ${Buffer.from(`${this.username}:${this.password}`).toString('base64')}`;
+            this.requestHeader['Authorization'] =
+                `Basic ${Buffer.from(`${this.credentials.username}:${this.credentials.password}`).toString('base64')}`;
         }
 
         /**
@@ -67,7 +68,7 @@ module.exports = function (RED) {
             var node = this;
             
             let req = new Promise(rtn => {
-                urllib.request(ApiEndpointUrl + this.username + '/initClient', {
+                urllib.request(ApiEndpointUrl + this.credentials.username + '/initClient', {
                     method: 'POST',
                     dataType: 'json',
                     headers: this.requestHeader,
@@ -103,5 +104,10 @@ module.exports = function (RED) {
     }
 
     // register node
-    RED.nodes.registerType('apple-findme-account', AppleFindMeAccountNode);
+    RED.nodes.registerType('apple-findme-account', AppleFindMeAccountNode, {
+        credentials: {
+            username: { type: 'text' },
+            password: { type: 'password' }
+        }
+    });
 }

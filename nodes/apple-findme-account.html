@@ -3,16 +3,18 @@
         category: 'config',
         defaults: {
             name: { value: '' },
-            username: { value: '', required: true },
-            password: { value: '', required: true },
-
+            
             apiThrottleLimit: { value: 60, validate: (v) => {
                 return !(v < 60 || v > 3600)
             }},
             requestTimeout: { value: 5 },
         },
+        credentials: {
+            username: { value: '', required: true, type: 'text' },
+            password: { value: '', required: true, type: 'password' },
+        },
         label() {
-            return this.name || this.username;
+            return this.name || this.credentials.username;
         },
     });
 </script>
