@@ -76,7 +76,7 @@ module.exports = function (RED) {
                     rejectUnauthorized: false,
                     timeout: 5000,
                 }, function (err, data, res) {
-                    err ||= res.statusCode != 200;
+                    err = err || res.statusCode != 200;
 
                     if (!err)
                         node.lastRequestDevices = {
