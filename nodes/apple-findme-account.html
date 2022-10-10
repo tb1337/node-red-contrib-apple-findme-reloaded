@@ -14,7 +14,7 @@
             password: { value: '', required: true, type: 'password' },
         },
         label() {
-            return this.name || this.credentials.username;
+            return this.name || this.credentials.username || 'Apple Account';
         },
     });
 </script>

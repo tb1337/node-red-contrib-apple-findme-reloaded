@@ -66,7 +66,7 @@ module.exports = function (RED) {
                     default:
                         text = `Unknown error (${res.res.statusCode})`;
                 }
-
+                
                 this.status({ fill: fill, shape: shape, text: text });
             }
             else {
