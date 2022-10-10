@@ -24,8 +24,6 @@ module.exports = function (RED) {
 
             this.name = config.name;
 
-            node.send(this.credentials);
-
             this.apiThrottleLimit = Number.parseInt(config.apiThrottleLimit, 10);
             this.requestTimeout = Number.parseInt(config.requestTimeout, 10);
 
